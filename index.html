@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Fun Art Studio!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="rainbow-text" id="studio-title">🎨 Kids Art Studio! 🎨</h1>
+        
+        <div class="language-selector">
+            <button onclick="setLanguage('en')" class="lang-btn">🇺🇸 English</button>
+            <button onclick="setLanguage('fr')" class="lang-btn">🇫🇷 Français</button>
+            <button onclick="setLanguage('ar')" class="lang-btn">🇸🇦 العربية</button>
+        </div>
+
+        <div class="color-picker">
+            <!-- Color buttons -->
+            <div class="color-btn" style="background: red;" onclick="setColor('red')"></div>
+            <div class="color-btn" style="background: orange;" onclick="setColor('orange')"></div>
+            <div class="color-btn" style="background: yellow;" onclick="setColor('yellow')"></div>
+            <div class="color-btn" style="background: lime;" onclick="setColor('lime')"></div>
+            <div class="color-btn" style="background: green;" onclick="setColor('green')"></div>
+            <div class="color-btn" style="background: turquoise;" onclick="setColor('turquoise')"></div>
+            <div class="color-btn" style="background: skyblue;" onclick="setColor('skyblue')"></div>
+            <div class="color-btn" style="background: blue;" onclick="setColor('blue')"></div>
+            <div class="color-btn" style="background: purple;" onclick="setColor('purple')"></div>
+            <div class="color-btn" style="background: pink;" onclick="setColor('pink')"></div>
+            <div class="color-btn" style="background: brown;" onclick="setColor('brown')"></div>
+            <div class="color-btn" style="background: black;" onclick="setColor('black')"></div>
+            <div class="color-btn custom-color-picker">
+                <input type="color" id="colorPicker" onchange="setColor(this.value)">
+            </div>
+        </div>
+
+        <div class="tools">
+            <button id="clearDrawing" onclick="clearCanvas()">Clear Drawing</button>
+            <button id="biggerBrush" onclick="increaseBrush()">Bigger Brush</button>
+            <button id="smallerBrush" onclick="decreaseBrush()">Smaller Brush</button>
+            <button id="saveDrawing" onclick="saveDrawing()">Save Drawing</button>
+            <button id="shareDrawing" onclick="shareDrawing()">Share Drawing</button>
+            <label for="fileInput" class="file-label" id="upload-label">Upload Image</label>
+            <input type="file" id="fileInput" accept="image/*" onchange="uploadImage(event)">
+        </div>
+
+        <canvas id="drawingCanvas" class="drawing-area" width="760" height="400"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

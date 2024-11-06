@@ -1,0 +1,6 @@
+services:
+  - type: static_site
+    name: kids-art-studio
+    env: static
+    buildCommand: ''
+    publishDirectory: .
