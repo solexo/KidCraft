@@ -5,14 +5,21 @@ let drawing = false;
 let color = 'black';
 let brushSize = 5;
 
-// Event listeners for drawing
+// Event listeners for mouse and touch drawing
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
 
+// Add touch events for mobile
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDrawing);
+canvas.addEventListener('touchcancel', stopDrawing);
+
 // Functions for drawing
 function startDrawing(e) {
+    e.preventDefault();
     drawing = true;
     draw(e);
 }
@@ -25,14 +32,28 @@ function stopDrawing() {
 function draw(e) {
     if (!drawing) return;
     
+    e.preventDefault();
+    
     ctx.lineWidth = brushSize;
     ctx.lineCap = 'round';
     ctx.strokeStyle = color;
 
-    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    let x, y;
+    if (e.type.includes('touch')) {
+        // Get touch coordinates
+        const touch = e.touches[0];
+        x = touch.clientX - canvas.offsetLeft;
+        y = touch.clientY - canvas.offsetTop;
+    } else {
+        // Get mouse coordinates
+        x = e.clientX - canvas.offsetLeft;
+        y = e.clientY - canvas.offsetTop;
+    }
+
+    ctx.lineTo(x, y);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    ctx.moveTo(x, y);
 }
 
 // Change color of the drawing
@@ -127,7 +148,6 @@ function setLanguage(lang) {
         document.body.dir = 'ltr';
     }
 }
-
 
 // Upload Image
 function uploadImage(event) {
