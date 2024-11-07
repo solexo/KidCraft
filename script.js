@@ -5,6 +5,18 @@ let drawing = false;
 let color = 'black';
 let brushSize = 5;
 
+// Scale canvas for high-DPI screens
+function resizeCanvas() {
+    const pixelRatio = window.devicePixelRatio || 1;
+    canvas.width = canvas.offsetWidth * pixelRatio;
+    canvas.height = canvas.offsetHeight * pixelRatio;
+    ctx.scale(pixelRatio, pixelRatio);
+}
+resizeCanvas(); // Initial resize
+
+// Re-scale canvas when the window is resized
+window.addEventListener('resize', resizeCanvas);
+
 // Event listeners for mouse and touch drawing
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
@@ -39,15 +51,15 @@ function draw(e) {
     ctx.strokeStyle = color;
 
     let x, y;
+    const rect = canvas.getBoundingClientRect();
+
     if (e.type.includes('touch')) {
-        // Get touch coordinates
         const touch = e.touches[0];
-        x = touch.clientX - canvas.offsetLeft;
-        y = touch.clientY - canvas.offsetTop;
+        x = (touch.clientX - rect.left);
+        y = (touch.clientY - rect.top);
     } else {
-        // Get mouse coordinates
-        x = e.clientX - canvas.offsetLeft;
-        y = e.clientY - canvas.offsetTop;
+        x = (e.clientX - rect.left);
+        y = (e.clientY - rect.top);
     }
 
     ctx.lineTo(x, y);
