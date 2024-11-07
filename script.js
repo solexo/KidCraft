@@ -169,11 +169,19 @@ function uploadImage(event) {
         reader.onload = function(e) {
             const img = new Image();
             img.onload = function() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas before drawing image
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw uploaded image on canvas
+                // Clear canvas before drawing image
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw the image scaled to fit the canvas dimensions
+                const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                const x = (canvas.width - img.width * scale) / 2;
+                const y = (canvas.height - img.height * scale) / 2;
+                
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
             };
             img.src = e.target.result;
         };
         reader.readAsDataURL(file);
     }
 }
+
